@@ -2,7 +2,7 @@
 
 [![GoDoc](https://pkg.go.dev/badge/github.com/willoma/gomplements)](https://pkg.go.dev/github.com/willoma/gomplements)
 
-_Gomplements_ extends [https://www.gomponents.com/](Gomponents), a collection of HTML 5 components in pure Go, by providing an `Element` interface and its base implementation, as well as specific `Class` and `Styles` types.
+_Gomplements_ extends [Gomponents](https://www.gomponents.com/), a collection of HTML 5 components in pure Go, by providing an `Element` interface and its base implementation, as well as specific `Class` and `Styles` types.
 
 It is suggested to import _Gomplements_ with the `e` (meaning "element") alias:
 
