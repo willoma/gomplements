@@ -15,8 +15,7 @@ import e "github.com/willoma/gomplements"
 Simple example with _Gomplements_:
 
 ```go
-component := e.Elem(
-	html.Div,
+component := e.Div(
 	Class("my-component"),
 	Class("blue"),
 	"Hello world",
@@ -41,8 +40,7 @@ component := h.Div(
 The _Gomplements_ `Element` allows adding children afterwards, using the `With` method:
 
 ```go
-component := e.Elem(
-	html.Div,
+component := e.Div(
 	Class("my-component"),
 	"Hello world",
 )
@@ -118,7 +116,7 @@ HTML elements are already provided as functions that return `Element` instances,
 which means the following are equivalent:
 
 ```go
-component := e.Elem(html.Span, e.Class("my-component"))
+component := e.Span(e.Class("my-component"))
 
 component := e.Span(e.Class("my-component"))
 ```
