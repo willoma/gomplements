@@ -125,3 +125,8 @@ component := e.Span(e.Class("my-component"))
 
 _Gomplements_ also provides some helpers to simplify some common situations,
 for instance `AHref` or `ImgSrc`. Check out the package doc!
+
+## ARIA
+
+_Gomplements_ includes a collection of ARIA helpers, directly usable as children
+on elements in order to define ARIA roles or attributes.
