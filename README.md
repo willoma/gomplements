@@ -146,9 +146,19 @@ If the condition is false, the attribute is not built and nil is returned.
 ## Helpers
 
 _Gomplements_ also provides some helpers to simplify some common situations,
-for instance `AHref` or `ImgSrc`. Check out the package doc!
+for instance `AHref` or `ImgSrc`. Check out the package reference!
 
 ## ARIA
 
 _Gomplements_ includes a collection of ARIA helpers, directly usable as children
 on elements in order to define ARIA roles or attributes.
+
+For example:
+
+```go
+component := e.Span(
+	e.Class("my-component"),
+	e.AriaToolbar,
+	e.AriaLabel("main tools"),
+)
+```
