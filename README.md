@@ -121,6 +121,24 @@ component := e.Span(e.Class("my-component"))
 component := e.Span(e.Class("my-component"))
 ```
 
+## Conditional attributes
+
+In addition to regular attributes from `github.com/maragudk/gomponents/html`, you may use their equivalent in `e`, which require a boolean indicating if the attribute must be included. If allows avoiding `gomponents.If`, the following are equivalent:
+
+```go
+component := e.Span(
+	e.Class("my-component"),
+	gomponents.If(condition1, html.Selected()),
+	gomponents.If(condition2, html.Value("42")),
+)
+
+component := e.Span(
+	e.Class("my-component"),
+	e.Selected(condition1),
+	e.Value("42", condition2),
+)
+```
+
 ## Helpers
 
 _Gomplements_ also provides some helpers to simplify some common situations,
