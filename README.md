@@ -123,21 +123,25 @@ component := e.Span(e.Class("my-component"))
 
 ## Conditional attributes
 
-In addition to regular attributes from `github.com/maragudk/gomponents/html`, you may use their equivalent in `e`, which require a boolean indicating if the attribute must be included. If allows avoiding `gomponents.If`, the following are equivalent:
+In addition to regular attributes from `github.com/maragudk/gomponents/html`, you may use their equivalent in `e`, which allow appending a boolean indicating if the attribute must be included. It helps avoiding `gomponents.If`, the following are equivalent:
 
 ```go
 component := e.Span(
 	e.Class("my-component"),
+	html.Disabled(),
 	gomponents.If(condition1, html.Selected()),
 	gomponents.If(condition2, html.Value("42")),
 )
 
 component := e.Span(
 	e.Class("my-component"),
+	e.Disabled(),
 	e.Selected(condition1),
 	e.Value("42", condition2),
 )
 ```
+
+If the condition is false, the attribute is not built and nil is returned.
 
 ## Helpers
 

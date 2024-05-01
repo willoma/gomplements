@@ -5,21 +5,16 @@ import (
 	"github.com/maragudk/gomponents/html"
 )
 
+func newConditionalAttribute(attrFn func() gomponents.Node, condition ...bool) gomponents.Node {
+	if len(condition) == 0 || condition[0] {
+		return attrFn()
+	}
+
+	return nil
+}
+
 type conditionalAttribute struct {
 	attrFn func() gomponents.Node
-	cond   bool
-}
-
-type conditionalAttributeWithValue struct {
-	attrFn func(string) gomponents.Node
-	value  string
-	cond   bool
-}
-
-type conditionalAttributeWithNameAndValue struct {
-	attrFn func(string, string) gomponents.Node
-	name   string
-	value  string
 	cond   bool
 }
 
@@ -29,10 +24,39 @@ func (b conditionalAttribute) ModifyParent(p Element) {
 	}
 }
 
+func newConditionalAttributeWithValue(attrFn func(string) gomponents.Node, value string, condition ...bool) gomponents.Node {
+	if len(condition) == 0 || condition[0] {
+		return attrFn(value)
+	}
+
+	return nil
+}
+
+type conditionalAttributeWithValue struct {
+	attrFn func(string) gomponents.Node
+	value  string
+	cond   bool
+}
+
 func (b conditionalAttributeWithValue) ModifyParent(p Element) {
 	if b.cond {
 		p.With(b.attrFn(b.value))
 	}
+}
+
+func newConditionalAttributeWithNameAndValue(attrFn func(string, string) gomponents.Node, name, value string, condition ...bool) gomponents.Node {
+	if len(condition) == 0 || condition[0] {
+		return attrFn(name, value)
+	}
+
+	return nil
+}
+
+type conditionalAttributeWithNameAndValue struct {
+	attrFn func(string, string) gomponents.Node
+	name   string
+	value  string
+	cond   bool
 }
 
 func (b conditionalAttributeWithNameAndValue) ModifyParent(p Element) {
@@ -41,406 +65,210 @@ func (b conditionalAttributeWithNameAndValue) ModifyParent(p Element) {
 	}
 }
 
-func Async(condition bool) *conditionalAttribute {
-	return &conditionalAttribute{
-		attrFn: html.Async,
-		cond:   condition,
-	}
+func Async(condition ...bool) gomponents.Node {
+	return newConditionalAttribute(html.Async, condition...)
 }
 
-func AutoFocus(condition bool) *conditionalAttribute {
-	return &conditionalAttribute{
-		attrFn: html.AutoFocus,
-		cond:   condition,
-	}
+func AutoFocus(condition ...bool) gomponents.Node {
+	return newConditionalAttribute(html.AutoFocus, condition...)
 }
 
-func AutoPlay(condition bool) *conditionalAttribute {
-	return &conditionalAttribute{
-		attrFn: html.AutoPlay,
-		cond:   condition,
-	}
+func AutoPlay(condition ...bool) gomponents.Node {
+	return newConditionalAttribute(html.AutoPlay, condition...)
 }
 
-func Checked(condition bool) *conditionalAttribute {
-	return &conditionalAttribute{
-		attrFn: html.Checked,
-		cond:   condition,
-	}
+func Checked(condition ...bool) gomponents.Node {
+	return newConditionalAttribute(html.Checked, condition...)
 }
 
-func Defer(condition bool) *conditionalAttribute {
-	return &conditionalAttribute{
-		attrFn: html.Defer,
-		cond:   condition,
-	}
+func Defer(condition ...bool) gomponents.Node {
+	return newConditionalAttribute(html.Defer, condition...)
 }
 
-func Disabled(condition bool) *conditionalAttribute {
-	return &conditionalAttribute{
-		attrFn: html.Disabled,
-		cond:   condition,
-	}
+func Disabled(condition ...bool) gomponents.Node {
+	return newConditionalAttribute(html.Disabled, condition...)
 }
 
-func Loop(condition bool) *conditionalAttribute {
-	return &conditionalAttribute{
-		attrFn: html.Loop,
-		cond:   condition,
-	}
+func Loop(condition ...bool) gomponents.Node {
+	return newConditionalAttribute(html.Loop, condition...)
 }
 
-func Multiple(condition bool) *conditionalAttribute {
-	return &conditionalAttribute{
-		attrFn: html.Multiple,
-		cond:   condition,
-	}
+func Multiple(condition ...bool) gomponents.Node {
+	return newConditionalAttribute(html.Multiple, condition...)
 }
 
-func Muted(condition bool) *conditionalAttribute {
-	return &conditionalAttribute{
-		attrFn: html.Muted,
-		cond:   condition,
-	}
+func Muted(condition ...bool) gomponents.Node {
+	return newConditionalAttribute(html.Muted, condition...)
 }
 
-func PlaysInline(condition bool) *conditionalAttribute {
-	return &conditionalAttribute{
-		attrFn: html.PlaysInline,
-		cond:   condition,
-	}
+func PlaysInline(condition ...bool) gomponents.Node {
+	return newConditionalAttribute(html.PlaysInline, condition...)
 }
 
-func ReadOnly(condition bool) *conditionalAttribute {
-	return &conditionalAttribute{
-		attrFn: html.ReadOnly,
-		cond:   condition,
-	}
+func ReadOnly(condition ...bool) gomponents.Node {
+	return newConditionalAttribute(html.ReadOnly, condition...)
 }
 
-func Required(condition bool) *conditionalAttribute {
-	return &conditionalAttribute{
-		attrFn: html.Required,
-		cond:   condition,
-	}
+func Required(condition ...bool) gomponents.Node {
+	return newConditionalAttribute(html.Required, condition...)
 }
 
-func Selected(condition bool) *conditionalAttribute {
-	return &conditionalAttribute{
-		attrFn: html.Selected,
-		cond:   condition,
-	}
+func Selected(condition ...bool) gomponents.Node {
+	return newConditionalAttribute(html.Selected, condition...)
 }
 
-func Accept(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Accept,
-		value:  v,
-		cond:   condition,
-	}
+func Accept(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Accept, value, condition...)
 }
 
-func Action(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Action,
-		value:  v,
-		cond:   condition,
-	}
+func Action(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Action, value, condition...)
 }
 
-func Alt(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Alt,
-		value:  v,
-		cond:   condition,
-	}
+func Alt(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Alt, value, condition...)
 }
 
-func As(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.As,
-		value:  v,
-		cond:   condition,
-	}
+func As(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.As, value, condition...)
 }
 
-func AutoComplete(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.AutoComplete,
-		value:  v,
-		cond:   condition,
-	}
+func AutoComplete(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.AutoComplete, value, condition...)
 }
 
-func Charset(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Charset,
-		value:  v,
-		cond:   condition,
-	}
+func Charset(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Charset, value, condition...)
 }
 
-func Cols(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Cols,
-		value:  v,
-		cond:   condition,
-	}
+func Cols(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Cols, value, condition...)
 }
 
-func ColSpan(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.ColSpan,
-		value:  v,
-		cond:   condition,
-	}
+func ColSpan(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.ColSpan, value, condition...)
 }
 
-func Content(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Content,
-		value:  v,
-		cond:   condition,
-	}
+func Content(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Content, value, condition...)
 }
 
-func DataAttr(name, v string, condition bool) *conditionalAttributeWithNameAndValue {
-	return &conditionalAttributeWithNameAndValue{
-		attrFn: html.DataAttr,
-		name:   name,
-		value:  v,
-		cond:   condition,
-	}
+func DataAttr(name, v string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithNameAndValue(html.DataAttr, name, v, condition...)
 }
 
-func For(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.For,
-		value:  v,
-		cond:   condition,
-	}
+func For(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.For, value, condition...)
 }
 
-func FormAttr(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.FormAttr,
-		value:  v,
-		cond:   condition,
-	}
+func FormAttr(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.FormAttr, value, condition...)
 }
 
-func Height(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Height,
-		value:  v,
-		cond:   condition,
-	}
+func Height(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Height, value, condition...)
 }
 
-func Href(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Href,
-		value:  v,
-		cond:   condition,
-	}
+func Href(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Href, value, condition...)
 }
 
-func Lang(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Lang,
-		value:  v,
-		cond:   condition,
-	}
+func Lang(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Lang, value, condition...)
 }
 
-func Loading(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Loading,
-		value:  v,
-		cond:   condition,
-	}
+func Loading(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Loading, value, condition...)
 }
 
-func Max(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Max,
-		value:  v,
-		cond:   condition,
-	}
+func Max(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Max, value, condition...)
 }
 
-func MaxLength(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.MaxLength,
-		value:  v,
-		cond:   condition,
-	}
+func MaxLength(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.MaxLength, value, condition...)
 }
 
-func Method(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Method,
-		value:  v,
-		cond:   condition,
-	}
+func Method(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Method, value, condition...)
 }
 
-func Min(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Min,
-		value:  v,
-		cond:   condition,
-	}
+func Min(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Min, value, condition...)
 }
 
-func MinLength(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.MinLength,
-		value:  v,
-		cond:   condition,
-	}
+func MinLength(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.MinLength, value, condition...)
 }
 
-func Name(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Name,
-		value:  v,
-		cond:   condition,
-	}
+func Name(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Name, value, condition...)
 }
 
-func Pattern(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Pattern,
-		value:  v,
-		cond:   condition,
-	}
+func Pattern(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Pattern, value, condition...)
 }
 
-func Placeholder(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Placeholder,
-		value:  v,
-		cond:   condition,
-	}
+func Placeholder(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Placeholder, value, condition...)
 }
 
-func Poster(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Poster,
-		value:  v,
-		cond:   condition,
-	}
+func Poster(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Poster, value, condition...)
 }
 
-func Preload(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Preload,
-		value:  v,
-		cond:   condition,
-	}
+func Preload(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Preload, value, condition...)
 }
 
-func Rel(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Rel,
-		value:  v,
-		cond:   condition,
-	}
+func Rel(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Rel, value, condition...)
 }
 
-func Rows(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Rows,
-		value:  v,
-		cond:   condition,
-	}
+func Rows(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Rows, value, condition...)
 }
 
-func RowSpan(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.RowSpan,
-		value:  v,
-		cond:   condition,
-	}
+func RowSpan(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.RowSpan, value, condition...)
 }
 
-func Src(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Src,
-		value:  v,
-		cond:   condition,
-	}
+func Src(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Src, value, condition...)
 }
 
-func SrcSet(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.SrcSet,
-		value:  v,
-		cond:   condition,
-	}
+func SrcSet(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.SrcSet, value, condition...)
 }
 
-func Step(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Step,
-		value:  v,
-		cond:   condition,
-	}
+func Step(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Step, value, condition...)
 }
 
-func TabIndex(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.TabIndex,
-		value:  v,
-		cond:   condition,
-	}
+func TabIndex(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.TabIndex, value, condition...)
 }
 
-func Target(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Target,
-		value:  v,
-		cond:   condition,
-	}
+func Target(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Target, value, condition...)
 }
 
-func TitleAttr(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.TitleAttr,
-		value:  v,
-		cond:   condition,
-	}
+func TitleAttr(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.TitleAttr, value, condition...)
 }
 
-func Type(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Type,
-		value:  v,
-		cond:   condition,
-	}
+func Type(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Type, value, condition...)
 }
 
-func Value(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Value,
-		value:  v,
-		cond:   condition,
-	}
+func Value(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Value, value, condition...)
 }
 
-func Width(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.Width,
-		value:  v,
-		cond:   condition,
-	}
+func Width(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.Width, value, condition...)
 }
 
-func EncType(v string, condition bool) *conditionalAttributeWithValue {
-	return &conditionalAttributeWithValue{
-		attrFn: html.EncType,
-		value:  v,
-		cond:   condition,
-	}
+func EncType(value string, condition ...bool) gomponents.Node {
+	return newConditionalAttributeWithValue(html.EncType, value, condition...)
 }
