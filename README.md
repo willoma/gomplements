@@ -143,6 +143,23 @@ component := e.Span(
 
 If the condition is false, the attribute is not built and nil is returned.
 
+## Conditional element
+
+If you need to add an element conditionally, you may use `e.If`. If its condition argument is false, the element is not built and nil is returned.
+
+For example:
+
+```go
+component := e.Span(
+	e.Class("my-component"),
+	e.If(condition3, e.Div, e.Class("my-content"), "Something"),
+)
+```
+
+Here, `e.Div` is executed (built) only if `condition3` is true.
+
+However, there is a limitation: this function only works if the element builder takes only one `any` variadic as its argument(s). It would not work with the `e.AHref` helper, for example.
+
 ## Helpers
 
 _Gomplements_ also provides some helpers to simplify some common situations,
