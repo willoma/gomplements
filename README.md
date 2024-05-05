@@ -92,6 +92,8 @@ e.Styles{
 }
 ```
 
+Please note the _Gomplements_ classes and styles do not work on traditional `gomponents.Node` elements, only on `e.Element`.
+
 ## Parent modifier
 
 Sometimes, you need to modify a parent element depending on a child. You may
@@ -116,7 +118,7 @@ HTML elements are already provided as functions that return `Element` instances,
 which means the following are equivalent:
 
 ```go
-component := e.Span(e.Class("my-component"))
+component := e.Elem(html.Span, e.Class("my-component"))
 
 component := e.Span(e.Class("my-component"))
 ```
