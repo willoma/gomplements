@@ -13,18 +13,34 @@ type conditionalClass struct {
 	cond  bool
 }
 
-func (c conditionalClass) ModifyParent(p Element) {
+func (c *conditionalClass) ModifyParent(p Element) {
 	if c.cond {
 		p.With(c.class)
 	}
 }
 
-// Classes contains a list of CSS classes to be applied in the `class` attribute of an HTML element.
+// Classes contains multiple CSS classes to be applied in the class attribute of an Element.
 type Classes []Class
 
 // Classes implements Classeser.
 func (c Classes) Classes() []Class {
 	return c
+}
+
+// If allows to add multiple CSS classes to an Element, only if a condition is met.
+func (c Classes) If(condition bool) ParentModifier {
+	return &conditionalClasses{classes: c, cond: condition}
+}
+
+type conditionalClasses struct {
+	classes Classes
+	cond    bool
+}
+
+func (c *conditionalClasses) ModifyParent(p Element) {
+	if c.cond {
+		p.With(c.classes)
+	}
 }
 
 // Classer is an interface that allows to add a CSS class to an HTML element.

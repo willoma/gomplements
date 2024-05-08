@@ -52,38 +52,53 @@ This makes it easier to build a component while reading some data in a loop, or 
 
 ## Class and Styles
 
-Use the `Class` type or implement `Classer` or `Classeser` in order to add CSS classes to an element:
+Option 1: use the `Class` type in order to add a single CSS class to an element:
 
 ```go
 errorColor := e.Class("red")
 successColor := e.Class("green")
+```
 
+Option 2: use the `Classes` type in order to add multiple CSS classes to an element:
+
+```go
+errorStatus := e.Classes{"red", "bold"}
+successStatus := e.Classes{"green", "italic"}
+```
+
+Option 3: implement `Classer` in order to add a single CSS class to an element:
+
+```go
 type color struct {
 	success bool
 }
 
-func (c *color) Class() Class {
+func (c *color) Class() e.Class {
 	if c.success {
-		return successColor
+		return e.Class("green")
 	} else {
-		return errorColor
-	}
-}
-
-type component struct {
-	success bool
-}
-
-func (c *component) Classes() []Class {
-	if c.success {
-		return []Class{"myComponent", successColor}
-	} else {
-		return []Class{"myComponent", errorColor}
+		return e.Class("red")
 	}
 }
 ```
 
-You may also define specific CSS styles with the `Styles` map:
+Option 4: implement `Classeser` in order to add multiple CSS classes to an element:
+
+```go
+type status struct {
+	success bool
+}
+
+func (c *color) Classes() []e.Class {
+	if c.success {
+		return []e.Class{"green", "italic"}
+	} else {
+		return []e.Class{"red", "bold"}
+	}
+}
+```
+
+Option 5: define specific CSS styles with the `Styles` map:
 
 ```go
 e.Styles{
@@ -92,7 +107,7 @@ e.Styles{
 }
 ```
 
-Please note the _Gomplements_ classes and styles do not work on traditional `gomponents.Node` elements, only on `e.Element`.
+Please note the _Gomplements_ classes and styles do not work on traditional `gomponents.Node` elements, only on _Gomplements_' `Element`.
 
 ## Parent modifier
 
@@ -105,7 +120,7 @@ type subcomponent struct {
 }
 
 func (s *subcomponent) ModifyParent(parent e.Element) {
-	parent.With(Class("hasMySubcomponent"))
+	parent.With(Class("has-my-subcomponent"))
 	if s.success {
 		parent.With(successColor)
 	}
@@ -114,8 +129,7 @@ func (s *subcomponent) ModifyParent(parent e.Element) {
 
 ## HTML elements
 
-HTML elements are already provided as functions that return `Element` instances,
-which means the following are equivalent:
+HTML elements are already provided as functions that return `Element` instances, which means the following are equivalent:
 
 ```go
 component := e.Elem(html.Span, e.Class("my-component"))
@@ -164,7 +178,7 @@ However, there is a limitation: this function only works if the element builder 
 
 ## Conditional classes
 
-If yoyu need to add a class to an element conditionally, call the `.If(bool)` method on that class. If the condition is false, the class is not added to the element.
+If yoyu need to add a class to an element conditionally, call the `.If(bool)` method on that class. If the condition is false, the class is not added to the element. This method is also available on the `Classes` type.
 
 For example:
 
