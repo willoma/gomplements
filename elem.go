@@ -74,38 +74,67 @@ func (e *elem) With(children ...any) Element {
 	for _, c := range children {
 		switch c := c.(type) {
 		case func(...gomponents.Node) gomponents.Node:
+			if c == nil {
+				continue
+			}
 			e.elemFn = c
 		case Class:
-			e.classes[c] = true
+			if c != "" {
+				e.classes[c] = true
+			}
 		case Classer:
-			e.classes[c.Class()] = true
+			cl := c.Class()
+			if cl != "" {
+				e.classes[cl] = true
+			}
 		case Classeser:
 			for _, cl := range c.Classes() {
-				e.classes[cl] = true
+				if cl != "" {
+					e.classes[cl] = true
+				}
 			}
 		case Styles:
 			for prop, val := range c {
 				e.styles[prop] = val
 			}
 		case ParentModifierAndNode:
+			if c == nil {
+				continue
+			}
 			c.ModifyParent(e)
 			e.elements = append(e.elements, c)
 		case ParentModifier:
+			if c == nil {
+				continue
+			}
 			c.ModifyParent(e)
 		case Element:
+			if c == nil {
+				continue
+			}
 			e.elements = append(e.elements, c)
 		case gomponents.Node:
+			if c == nil {
+				continue
+			}
 			if IsAttribute(c) {
 				e.attributes = append(e.attributes, c)
 			} else {
 				e.elements = append(e.elements, c)
 			}
 		case ID:
-			e.attributes = append(e.attributes, html.ID(string(c)))
+			if c != "" {
+				e.attributes = append(e.attributes, html.ID(string(c)))
+			}
 		case string:
-			e.elements = append(e.elements, gomponents.Text(c))
+			if c != "" {
+				e.elements = append(e.elements, gomponents.Text(c))
+			}
 		case fmt.Stringer:
-			e.elements = append(e.elements, gomponents.Text(c.String()))
+			s := c.String()
+			if s != "" {
+				e.elements = append(e.elements, gomponents.Text(s))
+			}
 		case []any:
 			e.With(c...)
 		}
