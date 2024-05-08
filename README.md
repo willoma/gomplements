@@ -162,6 +162,21 @@ Here, `e.Div` is executed (built) only if `condition3` is true.
 
 However, there is a limitation: this function only works if the element builder takes only one `any` variadic as its argument(s). It would not work with the `e.AHref` helper, for example.
 
+## Conditional classes
+
+If yoyu need to add a class to an element conditionally, call the `.If(bool)` method on that class. If the condition is false, the class is not added to the element.
+
+For example:
+
+```go
+func myComponent(alert bool) e.Element {
+	return e.Div(
+		e.Class("my-component"),
+		e.Class("alert").If(alert),
+	)
+}
+```
+
 ## Helpers
 
 _Gomplements_ also provides some helpers to simplify some common situations,
