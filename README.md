@@ -176,7 +176,7 @@ Here, `e.Div` is executed (built) only if `condition3` is true.
 
 However, there is a limitation: this function only works if the element builder takes only one `any` variadic as its argument(s). It would not work with the `e.AHref` helper, for example.
 
-## Conditional classes ans styles
+## Conditional classes and styles
 
 If yoyu need to add a class to an element conditionally, call the `.If(bool)` method on that class. If the condition is false, the class is not added to the element. This method is also available on the `Classes` and `Styles` types.
 
