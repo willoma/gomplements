@@ -1,6 +1,6 @@
 package gomplements
 
-import "github.com/maragudk/gomponents"
+import "maragu.dev/gomponents"
 
 type ariaBusy string
 

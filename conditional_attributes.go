@@ -1,8 +1,8 @@
 package gomplements
 
 import (
-	"github.com/maragudk/gomponents"
-	"github.com/maragudk/gomponents/html"
+	"maragu.dev/gomponents"
+	"maragu.dev/gomponents/html"
 )
 
 func newConditionalAttribute(attrFn func() gomponents.Node, condition ...bool) gomponents.Node {

@@ -4,7 +4,7 @@ import (
 	"io"
 	"strings"
 
-	"github.com/maragudk/gomponents"
+	"maragu.dev/gomponents"
 )
 
 // On adds a "on<event>" attribute to an element.

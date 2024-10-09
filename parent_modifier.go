@@ -1,6 +1,6 @@
 package gomplements
 
-import "github.com/maragudk/gomponents"
+import "maragu.dev/gomponents"
 
 // ParentModifier is an interface for modifying the parent of an element.
 type ParentModifier interface {
