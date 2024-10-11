@@ -1,8 +1,8 @@
 package gomplements
 
 import (
-	"github.com/maragudk/gomponents"
-	"github.com/maragudk/gomponents/html"
+	"maragu.dev/gomponents"
+	"maragu.dev/gomponents/html"
 )
 
 // AHref creates an <a> element with the provided href.

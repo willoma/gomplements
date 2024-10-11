@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/maragudk/gomponents"
-	"github.com/maragudk/gomponents/html"
+	"maragu.dev/gomponents"
+	"maragu.dev/gomponents/html"
 )
 
 // Element is an element, which implements the gomponents.Node interface with

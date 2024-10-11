@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/maragudk/gomponents"
+	"maragu.dev/gomponents"
 )
 
 // aria-activedescendant attribute

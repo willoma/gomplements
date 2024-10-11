@@ -3,7 +3,7 @@ package gomplements
 import (
 	"strings"
 
-	"github.com/maragudk/gomponents"
+	"maragu.dev/gomponents"
 )
 
 type ariaCurrent string

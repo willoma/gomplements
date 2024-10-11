@@ -1,7 +1,7 @@
 package gomplements
 
 import (
-	"github.com/maragudk/gomponents/html"
+	"maragu.dev/gomponents/html"
 )
 
 func A(children ...any) Element {

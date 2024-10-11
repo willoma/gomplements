@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"io"
 
-	"github.com/maragudk/gomponents"
+	"maragu.dev/gomponents"
 )
 
 // Prepare pre-renders a node in memory for future uses.
